@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        #camera,
+        #camera--view,
+        #camera--sensor,
+        #camera--output {
+            position: fixed;
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        #camera--view,
+        #camera--sensor,
+        #camera--output {
+            transform: scaleX(-1);
+            filter: FlipH;
+        }
+
+        #camera--trigger {
+            width: 200px;
+            background-color: black;
+            color: white;
+            font-size: 16px;
+            border-radius: 30px;
+            border: none;
+            padding: 15px 20px;
+            text-align: center;
+            box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+            position: fixed;
+            bottom: 30px;
+            left: calc(50% - 100px);
+        }
+
+        .taken {
+            height: 100px !important;
+            width: 100px !important;
+            transition: all 0.5s ease-in;
+            border: solid 3px white;
+            box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+            top: 20px;
+            right: 20px;
+            z-index: 2;
+        }
+    </style>
+    <title>Face Recognition</title>
+</head>
+
+<body>
+    <main id="camera">
+        <canvas id="camera--sensor"></canvas>
+        <video id="camera--view" autoplay playsinline></video>
+        <!-- <img src="//:0" alt="" id="camera--output" class="taken"> -->
+        <!-- <button id="camera--trigger">Take a picture</button> -->
+    </main>
+    <script>
+        // Set constraints for the video stream
+        var constraints = { video: { facingMode: "user" }, audio: false };
+
+        // Define constants
+        const cameraView = document.querySelector("#camera--view"),
+            // cameraOutput = document.querySelector("#camera--output"),
+            cameraSensor = document.querySelector("#camera--sensor");
+        // cameraTrigger = document.querySelector("#camera--trigger");
+
+        function initiateCapture() {
+            navigator.mediaDevices
+                .getUserMedia(constraints)
+                .then(function (stream) {
+                    let track = stream.getTracks()[0];
+                    cameraView.srcObject = stream;
+                    let timer = setInterval(sendFrame, 100);
+                })
+                .catch(function (error) {
+                    console.error("Oops. Something is broken.", error);
+                });
+        }
+
+        function sendFrame() {
+            cameraSensor.width = cameraView.videoWidth;
+            cameraSensor.height = cameraView.videoHeight;
+            cameraSensor.getContext("2d").drawImage(cameraView, 0, 0);
+            let base64 = cameraSensor.toDataURL();
+            // cameraOutput.src = base64;
+            // console.log(base64);
+            console.log('sending frame');
+            window.parent.postMessage(JSON.stringify({
+                event_code: 'ym-client-event', data: {
+                    event: {
+                        code: "face-login-frame",
+                        data: {
+                            base64: base64
+                        }
+                    }
+                }
+            }), '*');
+        }
+
+        // Initiate frame capture when the window loads
+        window.addEventListener("load", initiateCapture, false);
+    </script>
+</body>
+
+</html>
