@@ -96,7 +96,7 @@
             cameraSensor.getContext("2d").drawImage(cameraView, 0, 0);
             let base64 = cameraSensor.toDataURL();
             // cameraOutput.src = base64;
-            // console.log(base64);
+            console.log(base64);
             console.log('sending frame');
             window.parent.postMessage(JSON.stringify({
                 event_code: 'ym-client-event', data: {
