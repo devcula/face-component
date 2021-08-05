@@ -83,7 +83,7 @@
                 .then(function (stream) {
                     let track = stream.getTracks()[0];
                     cameraView.srcObject = stream;
-                    let timer = setInterval(sendFrame, 100);
+                    let timer = setInterval(sendFrame, 500);
                 })
                 .catch(function (error) {
                     console.error("Oops. Something is broken.", error);
