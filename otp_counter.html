@@ -40,7 +40,7 @@
         const timerSpan = document.getElementById('otp_timer');
         let seconds = params.seconds;
         messageSpan.innerHTML = decodeURIComponent(params.message);
-        timerSpan.innerHTML = seconds + ' seconds';
+        timerSpan.innerHTML = 'Your OTP will expire in <strong>' + seconds + ' seconds</strong>';
         let intervalId;
 
         function decreaseTimer() {
