@@ -51,7 +51,7 @@
                 timerSpan.innerHTML = '';
             }
             else {
-                timerSpan.innerHTML = seconds + ' seconds';
+                timerSpan.innerHTML = 'Your OTP will expire in <strong>' + seconds + ' seconds</strong>';
             }
         }
         intervalId = setInterval(decreaseTimer, 1000);
