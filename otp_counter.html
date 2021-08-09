@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Counter</title>
+</head>
+
+<body>
+
+    <div style="text-align: center;">
+        <span id="combined">
+            <span id="otp_message"></span>
+            <span id="otp_timer"></span>
+        </span>
+    </div>
+
+    <script>
+        const params = {};
+        function setQueryParams() {
+            let queryString = window.location.search;
+            if (queryString) {
+                queryString = queryString.replace('?', '').trim();
+            }
+            else {
+                queryString = '';
+            }
+            queryString = queryString.split("&").filter(v => v);
+            for (const param of queryString) {
+                const [key, value] = param.split("=");
+                params[key] = value;
+            }
+        }
+        setQueryParams();
+        console.log(params, "Params received");
+        const messageSpan = document.getElementById('otp_message');
+        const timerSpan = document.getElementById('otp_timer');
+        let seconds = params.seconds;
+        messageSpan.innerHTML = params.message;
+        timerSpan.innerHTML = seconds + ' seconds';
+        let intervalId;
+
+        function decreaseTimer() {
+            seconds--;
+            if (seconds === 0) {
+                clearInterval(intervalId);
+                messageSpan.innerHTML = 'Your OTP is expired.';
+                timerSpan.innerHTML = '';
+            }
+            else {
+                timerSpan.innerHTML = seconds + ' seconds';
+            }
+        }
+        intervalId = setInterval(decreaseTimer, 1000);
+
+    </script>
+</body>
+
+</html>
