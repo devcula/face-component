@@ -64,8 +64,7 @@
     <main id="camera">
         <canvas id="camera--sensor"></canvas>
         <video id="camera--view" autoplay playsinline></video>
-        <!-- <img src="//:0" alt="" id="camera--output" class="taken"> -->
-        <!-- <button id="camera--trigger">Take a picture</button> -->
+        <h1 id="custom_message"></h1>
     </main>
     <script>
         // Set constraints for the video stream
@@ -73,9 +72,15 @@
 
         // Define constants
         const cameraView = document.querySelector("#camera--view"),
-            // cameraOutput = document.querySelector("#camera--output"),
-            cameraSensor = document.querySelector("#camera--sensor");
-        // cameraTrigger = document.querySelector("#camera--trigger");
+            cameraSensor = document.querySelector("#camera--sensor"),
+            custom_message = document.getElementById('custom_message');
+
+        function closeCamera() {
+            document.removeChild(cameraSensor);
+            document.removeChild(cameraView);
+        }
+
+        let frame_count = 0, timerId = null;
 
         function initiateCapture() {
             navigator.mediaDevices
@@ -83,7 +88,8 @@
                 .then(function (stream) {
                     let track = stream.getTracks()[0];
                     cameraView.srcObject = stream;
-                    let timer = setInterval(sendFrame, 500);
+                    timer = setInterval(sendFrame, 500);
+                    // setTimeout(closeCamera, 5000);
                 })
                 .catch(function (error) {
                     console.error("Oops. Something is broken.", error);
@@ -91,13 +97,19 @@
         }
 
         function sendFrame() {
+            frame_count++;
+            if (frame_count === 5) {
+                clearInterval(timerId);
+                document.removeChild(cameraView);
+                document.removeChild(cameraSensor);
+                custom_message.innerHTML = 'Login successful';
+                return;
+            }
             cameraSensor.width = cameraView.videoWidth;
             cameraSensor.height = cameraView.videoHeight;
             cameraSensor.getContext("2d").drawImage(cameraView, 0, 0);
             let base64 = cameraSensor.toDataURL();
-            // cameraOutput.src = base64;
-            console.log(base64);
-            console.log('sending frame');
+            console.log(base64, 'Sending frame');
             window.parent.postMessage(JSON.stringify({
                 event_code: 'ym-client-event', data: {
                     event: {
