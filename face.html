@@ -75,11 +75,6 @@
             cameraSensor = document.querySelector("#camera--sensor"),
             custom_message = document.getElementById('custom_message');
 
-        function closeCamera() {
-            document.removeChild(cameraSensor);
-            document.removeChild(cameraView);
-        }
-
         let frame_count = 0, timerId = null;
 
         function initiateCapture() {
