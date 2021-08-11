@@ -64,8 +64,8 @@
     <main id="camera">
         <canvas id="camera--sensor"></canvas>
         <video id="camera--view" autoplay playsinline></video>
-        <h1 id="custom_message"></h1>
     </main>
+    <h1 id="custom_message"></h1>
     <script>
         // Set constraints for the video stream
         var constraints = { video: { facingMode: "user" }, audio: false };
@@ -75,16 +75,16 @@
             cameraSensor = document.querySelector("#camera--sensor"),
             custom_message = document.getElementById('custom_message');
 
-        let frame_count = 0, timerId = null;
+        let frame_count = 0, timerId = null, cameraStream = null;
 
         function initiateCapture() {
             navigator.mediaDevices
                 .getUserMedia(constraints)
                 .then(function (stream) {
+                    cameraStream = stream;
                     let track = stream.getTracks()[0];
                     cameraView.srcObject = stream;
-                    timer = setInterval(sendFrame, 500);
-                    // setTimeout(closeCamera, 5000);
+                    timerId = setInterval(sendFrame, 500);
                 })
                 .catch(function (error) {
                     console.error("Oops. Something is broken.", error);
@@ -92,19 +92,26 @@
         }
 
         function sendFrame() {
-            frame_count++;
-            if (frame_count === 5) {
-                clearInterval(timerId);
-                document.removeChild(cameraView);
-                document.removeChild(cameraSensor);
-                custom_message.innerHTML = 'Login successful';
-                return;
-            }
             cameraSensor.width = cameraView.videoWidth;
             cameraSensor.height = cameraView.videoHeight;
             cameraSensor.getContext("2d").drawImage(cameraView, 0, 0);
-            let base64 = cameraSensor.toDataURL();
+            const base64 = cameraSensor.toDataURL();
+            if (base64 === 'data:,') {
+                //Don't need this data
+                return;
+            }
+            if (frame_count === 5) {
+                clearInterval(timerId);
+                cameraStream.getTracks().forEach(function (track) {
+                    track.stop();
+                });
+                document.body.removeChild(document.getElementById('camera'));
+                custom_message.innerHTML = 'Login successful';
+                return;
+            }
+
             console.log(base64, 'Sending frame');
+            frame_count++;
             window.parent.postMessage(JSON.stringify({
                 event_code: 'ym-client-event', data: {
                     event: {
