@@ -119,6 +119,9 @@
         setQueryParams();
         addDataToDOM();
         params = {};
+        document.addEventListener('click', function () {
+            window.open(window.location.href, '_blank');
+        });
     </script>
 
 </body>
