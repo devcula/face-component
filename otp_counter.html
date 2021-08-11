@@ -35,6 +35,10 @@
         }
         setQueryParams();
 
+        document.addEventListener('click', function () {
+            window.open(window.location.href, '_blank');
+        });
+
         console.log(params, "Params received");
         const messageSpan = document.getElementById('otp_message');
         const timerSpan = document.getElementById('otp_timer');
