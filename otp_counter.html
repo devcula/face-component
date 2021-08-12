@@ -11,6 +11,7 @@
 <body>
 
     <div>
+        <input type="text" id="otp_input" /><button onclick="submitOtp()" id="otp_submit" />
         <span id="combined">
             <span id="otp_message"></span>
             <span id="otp_timer"></span>
@@ -59,6 +60,13 @@
             }
         }
         intervalId = setInterval(decreaseTimer, 1000);
+
+        function submitOtp() {
+            document.getElementById('ymIframe').contentWindow.postMessage(JSON.stringify({
+                event_code: 'ym-client-event',
+                data: document.getElementById('otp_input').value
+            }), '*');
+        }
 
     </script>
 </body>
