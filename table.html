@@ -17,12 +17,17 @@
         .heading {
             font-weight: bold;
             color: white;
-            background-color: darkslategrey;
+            background-color: rgb(0,0,205);
             font-size: 1rem;
+            text-align: center;
         }
 
         .value {
+            font-weight: bold;
+            color: white;
+            background-color: rgb(65,105,225);
             font-size: 1rem;
+            text-align: center;
         }
 
         .container {
@@ -45,7 +50,7 @@
                 <div id="dataTable" style="display: none;">
                     <table class="table table-sm">
                         <tbody id="dataBody">
-                            <tr>
+                            <tr class="heading">
                                 <th>Payout Frequency</th>
                                 <th>ROI</th>
                                 <th>Interest Amount</th>
@@ -59,6 +64,7 @@
         </div>
     </div>
     <script>
+       // console.log("Inside script")
         document.oncontextmenu = function () {
             return false;
         }
@@ -71,25 +77,29 @@
             else {
                 queryString = '';
             }
+            
             queryString = queryString.split("&").filter(v => v);
+            
             for (const param of queryString) {
                 const [key, value] = param.split("=");
                 params[key] = value;
             }
             try {
                 if (params.data) {
+
                     params.data = decodeURIComponent(params.data);
                     params.data = atob(params.data); //Convert from Base64 to original data
-                    // if (params.data.includes("%")) {
-                    //     params.data = decodeURIComponent(params.data);
-                    // }
+                    if (params.data.includes("%")) {
+                        params.data = decodeURIComponent(params.data);
+                    }
                     if (typeof params.data === 'string') {
                         params.data = JSON.parse(params.data);
                     }
                 }
             }
             catch (err) {
-                params.error = "Invalid data";
+
+                params.error = err;
             }
         }
 
@@ -108,6 +118,7 @@
                         let td=document.createElement("td");
                         td.appendChild(document.createTextNode(row[prop]));
                         tr.appendChild(td);
+                        td.classList.add("value");
                     }
                     dataDiv.appendChild(tr);
                 });
@@ -116,11 +127,19 @@
         }
 
         //Initialize values
+       
         setQueryParams();
         addDataToDOM();
         params = {};
         document.addEventListener('click', function () {
-            window.open(window.location.href, '_blank');
+            console.log("window parent",window.parent);
+            if(self==top)
+            {
+                return;
+            }else{
+                window.open(window.location.href, '_blank');  
+            }
+            
         });
     </script>
 
