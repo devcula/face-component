@@ -63,7 +63,11 @@
             //     event_code: 'ym-client-event',
             //     data: document.getElementById('otp_input').value
             // }), '*');
-            window.parent.sendEvent(document.getElementById('otp_input'));
+            // window.parent.sendEvent(document.getElementById('otp_input'));
+            window.parent.postMessage(JSON.stringify({
+                event_code: 'ym-client-event',
+                data: document.getElementById('otp_input').value
+            }), '*');
         }
 
     </script>
