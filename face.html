@@ -129,45 +129,41 @@
 
             console.log(base64, 'Sending frame');
             frame_count++;
-            // window.parent.postMessage(JSON.stringify({
-            //     event_code: 'ym-client-event', data: {
-            //         event: {
-            //             code: "face-login-frame",
-            //             data: {
-            //                 base64: base64
-            //             }
+
+            window.parent.postMessage(JSON.stringify({
+                event_code: 'ym-client-event',
+                data: 'face-login-frame' + base64
+            }), '*');
+
+            // var myHeaders = new Headers();
+            // myHeaders.append("Content-Type", "application/json");
+
+            // const message = {
+            //     "event": {
+            //         "code": "face-login-frame",
+            //         "data": {
+            //             "base64": base64
             //         }
             //     }
-            // }), '*');
-            var myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
+            // };
 
-            const message = {
-                "event": {
-                    "code": "face-login-frame",
-                    "data": {
-                        "base64": base64
-                    }
-                }
-            };
+            // var raw = JSON.stringify({
+            //     "from": params.uid,
+            //     "to": params.botId,
+            //     "message": JSON.stringify(message)
+            // });
 
-            var raw = JSON.stringify({
-                "from": params.uid,
-                "to": params.botId,
-                "message": JSON.stringify(message)
-            });
+            // var requestOptions = {
+            //     method: 'POST',
+            //     headers: myHeaders,
+            //     body: raw,
+            //     redirect: 'follow'
+            // };
 
-            var requestOptions = {
-                method: 'POST',
-                headers: myHeaders,
-                body: raw,
-                redirect: 'follow'
-            };
-
-            fetch("https://app.yellowmessenger.com/integrations/yellowmessenger/receive", requestOptions)
-                .then(response => response.text())
-                .then(result => console.log(result))
-                .catch(error => console.log('error', error));
+            // fetch("https://app.yellowmessenger.com/integrations/yellowmessenger/receive", requestOptions)
+            //     .then(response => response.text())
+            //     .then(result => console.log(result))
+            //     .catch(error => console.log('error', error));
         }
 
         // Initiate frame capture when the window loads
