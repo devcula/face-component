@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            -webkit-user-select: none;
+            -moz-user-select: -moz-none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .heading {
+            font-weight: bold;
+            color: white;
+            background-color: darkslategrey;
+            font-size: 1rem;
+        }
+
+        .value {
+            font-size: 1rem;
+        }
+
+        .container {
+            margin: 0;
+            padding: 0;
+        }
+
+        .table>tbody>tr>td {
+            vertical-align: middle;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class='col-md-4 col-sm-12'>
+                <div id="errorMessage" style="display: none;"></div>
+                <div id="dataTable" style="display: none;">
+                    <table class="table table-sm">
+                        <tbody id="dataBody">
+                            <tr>
+                                <th>Payout Frequency</th>
+                                <th>ROI</th>
+                                <th>Interest Amount</th>
+                                <th>Maturity Amount</th>
+                              </tr>
+                        </tbody>
+                        
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.oncontextmenu = function () {
+            return false;
+        }
+        let params = {};
+        function setQueryParams() {
+            let queryString = window.location.search;
+            if (queryString) {
+                queryString = queryString.replace('?', '').trim();
+            }
+            else {
+                queryString = '';
+            }
+            queryString = queryString.split("&").filter(v => v);
+            for (const param of queryString) {
+                const [key, value] = param.split("=");
+                params[key] = value;
+            }
+            try {
+                if (params.data) {
+                    params.data = decodeURIComponent(params.data);
+                    params.data = atob(params.data); //Convert from Base64 to original data
+                    // if (params.data.includes("%")) {
+                    //     params.data = decodeURIComponent(params.data);
+                    // }
+                    if (typeof params.data === 'string') {
+                        params.data = JSON.parse(params.data);
+                    }
+                }
+            }
+            catch (err) {
+                params.error = "Invalid data";
+            }
+        }
+
+        function addDataToDOM() {
+            if (params.error) {
+                let errorMessageDiv = document.getElementById('errorMessage');
+                errorMessageDiv.innerHTML = params.error;
+                errorMessageDiv.style.display = "block";
+            }
+            else {
+                let dataDiv = document.getElementById('dataBody');
+                params.data.forEach(row => {
+                    let tr = document.createElement("tr");
+                    for(const prop in row)
+                    {
+                        let td=document.createElement("td");
+                        td.appendChild(document.createTextNode(row[prop]));
+                        tr.appendChild(td);
+                    }
+                    dataDiv.appendChild(tr);
+                });
+                document.getElementById("dataTable").style.display = "inline-block";
+            }
+        }
+
+        //Initialize values
+        setQueryParams();
+        addDataToDOM();
+        params = {};
+        document.addEventListener('click', function () {
+            window.open(window.location.href, '_blank');
+        });
+    </script>
+
+</body>
+
+</html>
