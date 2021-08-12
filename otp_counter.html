@@ -59,10 +59,11 @@
         intervalId = setInterval(decreaseTimer, 1000);
 
         function submitOtp() {
-            document.getElementById('ymIframe').contentWindow.postMessage(JSON.stringify({
-                event_code: 'ym-client-event',
-                data: document.getElementById('otp_input').value
-            }), '*');
+            // document.getElementById('ymIframe').contentWindow.postMessage(JSON.stringify({
+            //     event_code: 'ym-client-event',
+            //     data: document.getElementById('otp_input').value
+            // }), '*');
+            window.YellowMessengerPlugin.sendEvent(document.getElementById('otp_input'));
         }
 
     </script>
