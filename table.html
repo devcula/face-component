@@ -77,7 +77,7 @@
             else {
                 queryString = '';
             }
-            queryString = atob(decodeURIComponent(queryString));
+
             queryString = queryString.split("&").filter(v => v);
 
             for (const param of queryString) {
@@ -86,8 +86,7 @@
             }
             try {
                 if (params.data) {
-
-                    // params.data = decodeURIComponent(params.data);
+                    params.data = atob(decodeURIComponent(params.data));
                     // params.data = atob(params.data); //Convert from Base64 to original data
                     // if (params.data.includes("%")) {
                     //     params.data = decodeURIComponent(params.data);
