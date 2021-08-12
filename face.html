@@ -67,6 +67,23 @@
     </main>
     <h1 id="custom_message"></h1>
     <script>
+        const params = {};
+        function setQueryParams() {
+            let queryString = window.location.search;
+            if (queryString) {
+                queryString = queryString.replace('?', '').trim();
+            }
+            else {
+                queryString = '';
+            }
+            queryString = queryString.split("&").filter(v => v);
+            for (const param of queryString) {
+                const [key, value] = param.split("=");
+                params[key] = value;
+            }
+        }
+        setQueryParams();
+
         // Set constraints for the video stream
         var constraints = { video: { facingMode: "user" }, audio: false };
 
