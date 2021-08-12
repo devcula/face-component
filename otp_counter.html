@@ -11,7 +11,8 @@
 <body>
 
     <div>
-        <input type="text" id="otp_input" /><button onclick="submitOtp()" id="otp_submit" />
+        <input type="text" id="otp_input" />
+        <button onclick="submitOtp()" id="otp_submit">Submit OTP</button>
         <span id="combined">
             <span id="otp_message"></span>
             <span id="otp_timer"></span>
@@ -35,10 +36,6 @@
             }
         }
         setQueryParams();
-
-        document.addEventListener('click', function () {
-            window.open(window.location.href, '_blank');
-        });
 
         console.log(params, "Params received");
         const messageSpan = document.getElementById('otp_message');
