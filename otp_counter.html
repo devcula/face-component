@@ -49,7 +49,7 @@
         .prompt {
             margin-top: 10px;
             margin-bottom: 10px;
-            font-size: 20px;
+            font-size: 17px;
             color: #4238B8;
             font-weight: bold;
         }
@@ -149,7 +149,17 @@
 
         $('.digit-group').find('input').each(function () {
             $(this).attr('maxlength', 1);
+
             $(this).on('keyup', function (e) {
+                if ($('#digit-1').val() && $('#digit-2').val()
+                    && $('#digit-3').val() && $('#digit-4').val()
+                    && $('#digit-5').val() && $('#digit-6').val()) {
+                    $('#otp_submit').attr('disabled', false);
+                }
+                else {
+                    $('#otp_submit').attr('disabled', true);
+                }
+
                 var parent = $($(this).parent());
 
                 if (e.keyCode === 8 || e.keyCode === 37) {
