@@ -227,6 +227,11 @@
 
         function resendOtp() {
             console.log("Resending otp");
+            document.getElementById("otp_resend").disabled = true;
+            document.getElementById("timer_message").innerHTML = "Your OTP will expire in the next";
+            seconds = params.seconds;
+            setTimers(seconds);
+            intervalId = setInterval(decreaseTimer, 1000);
             window.parent.postMessage(JSON.stringify({
                 event_code: 'ym-client-event',
                 data: "resend"
