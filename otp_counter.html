@@ -150,7 +150,7 @@
         $('.digit-group').find('input').each(function () {
             $(this).attr('maxlength', 1);
 
-            $(this).on('keyup input', function (e) {
+            $(this).on('input', function (e) {
                 if ($('#digit-1').val() && $('#digit-2').val()
                     && $('#digit-3').val() && $('#digit-4').val()
                     && $('#digit-5').val() && $('#digit-6').val()) {
