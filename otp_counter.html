@@ -254,9 +254,31 @@
             }), '*');
         }
 
-        window.addEventListener("load", function () {
+        function initiate() {
             $('#digit-1').select();
-        }, false);
+            window.parent.postMessage(JSON.stringify({
+                event_code: 'ym-client-event', data: {
+                    event: {
+                        code: "otp_webview_frame",
+                        data: {
+                            value: params.frameId
+                        }
+                    }
+                }
+            }), '*');
+        }
+
+        function otpAccepted() {
+            $('#digit-1,#digit-2,#digit-3,#digit-4,#digit-5,#digit-6,#otp_submit,#otp_resend').attr('disabled', true);
+            seconds = 0;
+            setTimers(seconds);
+            try {
+                clearInterval(intervalId);
+            }
+            catch (e) { }
+        }
+
+        window.addEventListener("load", initiate, false);
 
     </script>
 </body>
