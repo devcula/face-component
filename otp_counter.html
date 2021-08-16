@@ -280,6 +280,15 @@
             seconds = params.seconds;
             setTimers(seconds);
             intervalId = setInterval(decreaseTimer, 1000);
+            if ($('#digit-1').val() && $('#digit-2').val()
+                && $('#digit-3').val() && $('#digit-4').val()
+                && $('#digit-5').val() && $('#digit-6').val()
+                && seconds !== 0) {
+                $('#otp_submit').attr('disabled', false);
+            }
+            else {
+                $('#otp_submit').attr('disabled', true);
+            }
             window.parent.postMessage(JSON.stringify({
                 event_code: 'ym-client-event',
                 data: "resend"
