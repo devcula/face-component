@@ -279,6 +279,12 @@
         }
 
         window.addEventListener("load", initiate, false);
+        window.addEventListener("message", function (event) {
+            console.log(event.data, "Event data");
+            if (event.data.value === 'otp_validated') {
+                otpAccepted();
+            }
+        });
 
     </script>
 </body>
