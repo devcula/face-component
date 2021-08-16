@@ -198,13 +198,14 @@
             $(this).on('input', function (e) {
                 if ($('#digit-1').val() && $('#digit-2').val()
                     && $('#digit-3').val() && $('#digit-4').val()
-                    && $('#digit-5').val() && $('#digit-6').val()) {
+                    && $('#digit-5').val() && $('#digit-6').val()
+                    && seconds !== 0) {
                     $('#otp_submit').attr('disabled', false);
                 }
                 else {
                     $('#otp_submit').attr('disabled', true);
                 }
-                console.log(e, "Input event");
+                // console.log(e, "Input event");
 
                 var parent = $($(this).parent());
 
