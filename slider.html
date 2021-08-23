@@ -58,7 +58,7 @@
         .sliderLabel {
             padding: 0 10px;
             width: fit-content;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             position: relative;
             /* left: 3%; */
         }
@@ -201,34 +201,21 @@
         }
         setQueryParams();
 
-        function moveBubble(pixel) {
+        function moveBubble() {
             const width = window.innerWidth;
             const inputWidth = width - 0.1 * width;
             const rangeInput = document.getElementById("range_picker");
             const { value, min, max } = rangeInput;
             const valuePercent = 100 * (value - min) / (max - min);
-            const left = ((width * 0.1) / 2) - 10 + valuePercent / 100 * inputWidth;
+            const bubbleWidth = document.querySelector('.slider_value_span').clientWidth;
+            const left = ((width * 0.1) / 2) - (bubbleWidth - 30) + valuePercent / 100 * inputWidth;
             document.querySelector('.slider_value_span').style.left = `${left}px`;
         }
 
         function changeValue(e) {
             document.querySelector('.slider_output').innerHTML = document.getElementById('range_picker').value;
-            // const rangeInput = document.getElementById("range_picker");
-            // let n = 30;
-            // const { value, min, max } = rangeInput;
-            // // Number(rangeInput.value) === Number(rangeInput.max) ? n = -8 : Number(rangeInput.value) == Number(rangeInput.max) / 2 ? n = 0 : Number(rangeInput.value) >= Number(rangeInput.max) / 2 && (n = 10);
-            // if (value === max) {
-            //     n = -8;
-            // }
-            // else if (value == max / 2) {
-            //     n = 0;
-            // }
-            // else if (value >= max / 2) {
-            //     n = 10;
-            // }
-            // const valuePercent = 100 * (value - min) / (max - min);
-            // const o = n - .2 * valuePercent;
-            // document.querySelector('.slider_value_span').style.left = "calc(".concat(valuePercent, "% + (").concat(o, "px))");
+            const rangeInput = document.getElementById("range_picker");
+            const { value, min, max } = rangeInput;
             moveBubble();
             var a = '#4a90e2';
             rangeInput.style.background = "linear-gradient(to right, ".concat(a, " 0%, ").concat(a, " ").concat((value - min) / (max - min) * 100, "%, #DEE2E6 ").concat((value - min) / (max - min) * 100, "%, #DEE2E6 100%)")
