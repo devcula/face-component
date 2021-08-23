@@ -202,6 +202,18 @@
         }
         setQueryParams();
 
+        params.data = decodeURIComponent(params.data);
+        params.data = JSON.parse(params.data);
+        const rangeInput = document.getElementById("range_picker");
+        rangeInput.min = params.data.min;
+        rangeInput.max = params.data.max;
+        rangeInput.step = params.data.step;
+        document.querySelector('.lableBefore').innerHTML = `Min<br>${params.data.min}`;
+        document.querySelector('.lableAfter').innerHTML = `Max<br>${params.data.max}`;
+        document.querySelector('.slider_output').innerHTML = params.data.value;
+        document.querySelector('.slider_title').innerHTML = params.data.title;
+        rangeInput.value = params.data.value;
+
         function moveBubble() {
             const width = window.innerWidth;
             const inputWidth = width - 0.1 * width;
@@ -210,9 +222,6 @@
             const valuePercent = 100 * (value - min) / (max - min);
             const bubbleWidth = document.querySelector('.slider_value_span').offsetWidth;
             let left = ((width * 0.1) / 2) - (bubbleWidth - 30) + valuePercent / 100 * inputWidth;
-            // if (left + bubbleWidth > width) {
-            //     left = width - bubbleWidth;
-            // }
             left = left + bubbleWidth + 10 > width ? width - bubbleWidth - 10 : left;
             document.querySelector('.slider_value_span').style.left = `${left}px`;
         }
@@ -232,6 +241,7 @@
                 data: document.getElementById('range_picker').value
             }), '*');
             document.getElementById('submit_button').disabled = true;
+            document.getElementById('range_picker').disabled = true;
         }
         moveBubble();
     </script>
