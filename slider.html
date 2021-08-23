@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slider</title>
+    <style>
+        body,
+        html {
+            width: 100%;
+            margin: 0;
+            font-family: “botplatform-font”, “Helvetica Neue”, Helvetica, Arial, sans-serif;
+            font-weight: 200;
+        }
+
+        body {
+            text-align: center;
+        }
+
+        .slider_parent_div .slider_title {
+            font-style: normal;
+            font-weight: 600;
+            font-size: 17px;
+            line-height: 24px;
+            color: #000000;
+            margin: 10px 20px;
+            text-align: left;
+        }
+
+        .lableBefore {
+            font-style: normal;
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 22px;
+            letter-spacing: 0.15px;
+            color: #000000;
+            position: absolute;
+            /* bottom: 110px; */
+            left: 10px;
+
+        }
+
+        .lableAfter {
+            font-style: normal;
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 22px;
+            letter-spacing: 0.15px;
+            color: #000000;
+            position: absolute;
+            /* bottom: 110px; */
+            right: 10px;
+        }
+
+        .sliderLabel {
+            padding: 0 10px;
+            width: fit-content;
+        }
+
+        .slider_value {
+            width: fit-content;
+            height: 24px;
+            text-align: center;
+            background: #4a90e2;
+            display: grid;
+            justify-content: center;
+            align-items: center;
+            /* position: absolute; */
+            /* transform: translateX(-50%); */
+            border-radius: 6px;
+            /* top: 40px; */
+            padding: 0 10px;
+        }
+
+        .slider_value::before {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-top: 10px solid #4a90e2;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            margin-top: -1px;
+        }
+
+        .slider_output {
+            font-style: normal;
+            font-weight: normal;
+            font-size: 12px;
+            line-height: 16px;
+            text-align: center;
+            letter-spacing: 0.15px;
+            color: var(--primaryTextColor);
+        }
+
+        .slider_line {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 13px !important;
+            width: 97%;
+            border-radius: 10em;
+            background-color: #DBE2EB;
+            outline: none;
+            margin-bottom: 14px;
+        }
+
+        .slider_submit {
+            background-color: #4a90e2;
+            color: white;
+            padding: 10px 20px 10px 20px;
+            font-weight: bold;
+            outline: none;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slider_parent_div">
+        <div class="slider_title">Loan Amount</div>
+        <div class="sliderContainer">
+            <div class="sliderLabel">
+                <span class="slider_value">
+                    <span class="slider_output">20000</span>
+                </span>
+            </div>
+            <input id="range_picker" type="range" step="20000" min="20000" max="2500000" value="20000"
+                class="slider_line" oninput="changeValue()">
+            <div style="padding-top: 5px;">
+                <span class="lableBefore">Min<br>20000</span>
+                <span class="lableAfter">Max<br>2500000</span>
+            </div>
+        </div>
+        <div>
+            <hr style="margin-top:60px;border-top: 1px solid #E3E3E3;">
+        </div>
+        <div class="slider_submit_div">
+            <button class="slider_submit">Submit</button>
+        </div>
+    </div>
+    <script>
+        const params = {};
+        function setQueryParams() {
+            let queryString = window.location.search;
+            if (queryString) {
+                queryString = queryString.replace('?', '').trim();
+            }
+            else {
+                queryString = '';
+            }
+            queryString = queryString.split("&").filter(v => v);
+            for (const param of queryString) {
+                const [key, value] = param.split("=");
+                params[key] = value;
+            }
+        }
+        setQueryParams();
+
+        function changeValue(e) {
+            document.querySelector('.slider_output').innerHTML = document.getElementById('range_picker').value;
+        }
+    </script>
+</body>
+
+</html>
