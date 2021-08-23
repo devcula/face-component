@@ -208,7 +208,7 @@
             const rangeInput = document.getElementById("range_picker");
             const { value, min, max } = rangeInput;
             const valuePercent = 100 * (value - min) / (max - min);
-            const bubbleWidth = document.querySelector('.slider_value_span').clientWidth;
+            const bubbleWidth = document.querySelector('.slider_value_span').offsetWidth;
             const left = ((width * 0.1) / 2) - (bubbleWidth - 30) + valuePercent / 100 * inputWidth;
             if (left + bubbleWidth > width) {
                 left = width - bubbleWidth;
