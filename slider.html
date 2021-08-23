@@ -58,6 +58,7 @@
         .sliderLabel {
             padding: 0 10px;
             width: fit-content;
+            margin-bottom: 10px;
         }
 
         .slider_value {
@@ -68,25 +69,25 @@
             display: grid;
             justify-content: center;
             align-items: center;
-            /* position: absolute; */
+            position: relative;
             /* transform: translateX(-50%); */
             border-radius: 6px;
             /* top: 40px; */
-            padding: 0 10px;
+            padding: 5px 10px 0px 10px;
         }
 
-        .slider_value::before {
+        .slider_value::after {
             content: "";
-            position: absolute;
+            position: relative;
             width: 0;
             height: 0;
             border-top: 10px solid #4a90e2;
             border-left: 5px solid transparent;
             border-right: 5px solid transparent;
-            top: 100%;
-            left: 50%;
-            margin-left: -5px;
-            margin-top: -1px;
+            top: 6px;
+            left: 10px;
+            /* margin-left: -5px;
+            margin-top: -1px; */
         }
 
         .slider_output {
@@ -151,6 +152,7 @@
             border: none;
             border-radius: 5px;
             font-size: 14px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -199,14 +201,14 @@
 
         function changeValue(e) {
             document.querySelector('.slider_output').innerHTML = document.getElementById('range_picker').value;
-            var t = document.getElementById("range_picker")
+            const rangeInput = document.getElementById("range_picker")
                 , n = 30;
-            Number(t.value) === Number(t.max) ? n = -8 : Number(t.value) == Number(t.max) / 2 ? n = 0 : Number(t.value) >= Number(t.max) / 2 && (n = 10);
-            var i = Number(100 * (t.value - t.min) / (t.max - t.min))
+            Number(rangeInput.value) === Number(rangeInput.max) ? n = -8 : Number(rangeInput.value) == Number(rangeInput.max) / 2 ? n = 0 : Number(rangeInput.value) >= Number(rangeInput.max) / 2 && (n = 10);
+            var i = Number(100 * (rangeInput.value - rangeInput.min) / (rangeInput.max - rangeInput.min))
                 , o = n - .2 * i;
             document.querySelector('.slider_value_span').style.left = "calc(".concat(i, "% + (").concat(o, "px))");
             var a = '#4a90e2';
-            t.style.background = "linear-gradient(to right, ".concat(a, " 0%, ").concat(a, " ").concat((t.value - t.min) / (t.max - t.min) * 100, "%, #DEE2E6 ").concat((t.value - t.min) / (t.max - t.min) * 100, "%, #DEE2E6 100%)")
+            rangeInput.style.background = "linear-gradient(to right, ".concat(a, " 0%, ").concat(a, " ").concat((rangeInput.value - rangeInput.min) / (rangeInput.max - rangeInput.min) * 100, "%, #DEE2E6 ").concat((rangeInput.value - rangeInput.min) / (rangeInput.max - rangeInput.min) * 100, "%, #DEE2E6 100%)")
         }
 
         function submit() {
