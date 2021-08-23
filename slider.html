@@ -105,7 +105,7 @@
             height: 13px !important;
             width: 97%;
             border-radius: 10em;
-            background-color: #DBE2EB;
+            background-color: #494c50;
             outline: none;
             margin-bottom: 14px;
         }
@@ -113,11 +113,12 @@
         .slider_submit {
             background-color: #4a90e2;
             color: white;
-            padding: 10px 20px 10px 20px;
+            padding: 13px 30px 13px 30px;
             font-weight: bold;
             outline: none;
             border: none;
             border-radius: 5px;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -142,7 +143,7 @@
             <hr style="margin-top:60px;border-top: 1px solid #E3E3E3;">
         </div>
         <div class="slider_submit_div">
-            <button class="slider_submit">Submit</button>
+            <button class="slider_submit" id="submit_button" onclick="submit()">Submit</button>
         </div>
     </div>
     <script>
@@ -165,6 +166,14 @@
 
         function changeValue(e) {
             document.querySelector('.slider_output').innerHTML = document.getElementById('range_picker').value;
+        }
+
+        function submit() {
+            window.parent.postMessage(JSON.stringify({
+                event_code: 'ym-client-event',
+                data: document.getElementById('range_picker').value
+            }), '*');
+            document.getElementById('submit_button').disabled = true;
         }
     </script>
 </body>
