@@ -96,7 +96,39 @@
             line-height: 16px;
             text-align: center;
             letter-spacing: 0.15px;
-            color: var(--primaryTextColor);
+            color: black;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            box-shadow: 1px 1px 1px #444444;
+            border: 4px solid #000000;
+            height: 25px;
+            width: 25px;
+            border-radius: 15px;
+            background: #4A90E2;
+            cursor: pointer;
+            -webkit-appearance: none;
+        }
+
+        input[type=range]::-moz-range-thumb {
+            box-shadow: 1px 1px 1px #444444;
+            border: 4px solid #000000;
+            height: 25px;
+            width: 25px;
+            border-radius: 15px;
+            background: #4A90E2;
+            cursor: pointer;
+        }
+
+        input[type=range]::-ms-thumb {
+            margin-top: 1px;
+            box-shadow: 1px 1px 1px #444444;
+            border: 4px solid #000000;
+            height: 25px;
+            width: 25px;
+            border-radius: 15px;
+            background: #4A90E2;
+            cursor: pointer;
         }
 
         .slider_line {
@@ -105,7 +137,7 @@
             height: 13px !important;
             width: 97%;
             border-radius: 10em;
-            background-color: #494c50;
+            background-color: #DBE2EB;
             outline: none;
             margin-bottom: 14px;
         }
@@ -128,19 +160,20 @@
         <div class="slider_title">Loan Amount</div>
         <div class="sliderContainer">
             <div class="sliderLabel">
-                <span class="slider_value">
+                <span class="slider_value slider_value_span">
                     <span class="slider_output">20000</span>
                 </span>
             </div>
             <input id="range_picker" type="range" step="20000" min="20000" max="2500000" value="20000"
-                class="slider_line" oninput="changeValue()">
+                class="slider_line" oninput="changeValue()"
+                style="background: linear-gradient(to right, rgb(74, 144, 226) 0%, rgb(74, 144, 226) 0%, rgb(222, 226, 230) 0%, rgb(222, 226, 230) 100%);">
             <div style="padding-top: 5px;">
                 <span class="lableBefore">Min<br>20000</span>
                 <span class="lableAfter">Max<br>2500000</span>
             </div>
         </div>
         <div>
-            <hr style="margin-top:60px;border-top: 1px solid #E3E3E3;">
+            <hr style="margin-top:60px;margin-bottom:20px;border-top: 1px solid #E3E3E3;">
         </div>
         <div class="slider_submit_div">
             <button class="slider_submit" id="submit_button" onclick="submit()">Submit</button>
@@ -166,6 +199,14 @@
 
         function changeValue(e) {
             document.querySelector('.slider_output').innerHTML = document.getElementById('range_picker').value;
+            var t = document.getElementById("range_picker")
+                , n = 30;
+            Number(t.value) === Number(t.max) ? n = -8 : Number(t.value) == Number(t.max) / 2 ? n = 0 : Number(t.value) >= Number(t.max) / 2 && (n = 10);
+            var i = Number(100 * (t.value - t.min) / (t.max - t.min))
+                , o = n - .2 * i;
+            document.querySelector('.slider_value_span').style.left = "calc(".concat(i, "% + (").concat(o, "px))");
+            var a = '#4a90e2';
+            t.style.background = "linear-gradient(to right, ".concat(a, " 0%, ").concat(a, " ").concat((t.value - t.min) / (t.max - t.min) * 100, "%, #DEE2E6 ").concat((t.value - t.min) / (t.max - t.min) * 100, "%, #DEE2E6 100%)")
         }
 
         function submit() {
