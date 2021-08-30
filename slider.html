@@ -224,7 +224,7 @@
         rangeInput.step = params.data.step;
         document.querySelector('.lableBefore').innerHTML = params.data.convert ? `Min<br>${params.data.currency ? params.data.currency + " " : ""}${getAmount(params.data.min)}` : `Min<br>${params.data.min}`;
         document.querySelector('.lableAfter').innerHTML = params.data.convert ? `Max<br>${params.data.currency ? params.data.currency + " " : ""}${getAmount(params.data.max)}` : `Max<br>${params.data.max}`;
-        document.querySelector('.slider_output').innerHTML = params.data.value;
+        document.querySelector('.slider_output').innerHTML = params.data.convert ? getAmount(params.data.value) : params.data.value;
         document.querySelector('.slider_title').innerHTML = params.data.title;
         rangeInput.value = params.data.value;
 
@@ -243,7 +243,7 @@
         }
 
         function changeValue(e) {
-            document.querySelector('.slider_output').innerHTML = document.getElementById('range_picker').value;
+            document.querySelector('.slider_output').innerHTML = params.data.convert ? getAmount(document.getElementById('range_picker').value) : document.getElementById('range_picker').value;
             const rangeInput = document.getElementById("range_picker");
             const { value, min, max } = rangeInput;
             moveBubble();
