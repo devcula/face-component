@@ -7,13 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OTP Counter</title>
     <style>
-        /* @import url('https://fonts.googleapis.com/css?family=Raleway:200'); */
-
         body,
         html {
             width: 100%;
             margin: 0;
-            /* font-family: 'Raleway', sans-serif; */
             font-family: “botplatform-font”, “Helvetica Neue”, Helvetica, Arial, sans-serif;
             font-weight: 200;
         }
@@ -40,13 +37,13 @@
         }
 
         .digit-group input {
-            width: 30px;
-            height: 50px;
+            width: 20px;
+            height: 40px;
             background-color: #4238B8;
             border: none;
             line-height: 50px;
             text-align: center;
-            font-size: 24px;
+            font-size: 20px;
             font-family: “botplatform-font”, “Helvetica Neue”, Helvetica, Arial, sans-serif;
             font-weight: bold;
             color: white;
@@ -62,7 +59,7 @@
         .prompt {
             margin-top: 10px;
             margin-bottom: 10px;
-            font-size: 17px;
+            font-size: 15px;
             color: #4238B8;
             font-weight: bold;
         }
@@ -75,7 +72,7 @@
 
         .buttonsDiv button {
             padding: 10px;
-            font-size: 17px;
+            font-size: 15px;
             border-radius: 10px;
             outline: none;
             width: 100px;
@@ -96,19 +93,19 @@
         }
 
         #timer_message {
-            font-size: 17px;
+            font-size: 15px;
             color: #4238B8;
             margin-bottom: 10px;
         }
 
         .timerDiv input {
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             background-color: #DDDDDD;
             border: none;
             line-height: 50px;
             text-align: center;
-            font-size: 24px;
+            font-size: 22px;
             font-family: “botplatform-font”, “Helvetica Neue”, Helvetica, Arial, sans-serif;
             font-weight: bold;
             color: black;
@@ -140,7 +137,7 @@
         </div>
         <div class="buttonsDiv">
             <button onclick="resendOtp()" id="otp_resend" disabled>Resend</button>
-            <button onclick="submitOtp()" id="otp_submit" disabled>Submit</button>
+            <button id="otp_submit" disabled>Submit</button>
         </div>
         <div id="timer_message">
             Your OTP will expire in the next
@@ -178,6 +175,9 @@
                 var parent = $($(this).parent());
 
                 if (e.target.value) {
+                    if (e.target.value.length > 1) {
+                        e.target.value = e.target.value[0];
+                    }
                     var next = parent.find('input#' + $(this).data('next'));
 
                     if (next.length) {
@@ -264,7 +264,7 @@
             }), '*');
         }
 
-        function submitOtp() {
+        function submitOtp(e) {
             const otp = document.getElementById('digit-1').value
                 + document.getElementById('digit-2').value
                 + document.getElementById('digit-3').value
@@ -279,6 +279,22 @@
                 data: otp
             }), '*');
         }
+
+        $('#otp_submit').on('keyup', function (e) {
+            // console.log(e, "CLICK EVENT");
+            switch (e.keyCode) {
+                case 8:
+                case 37:
+                case 38:
+                    $('#digit-6').select();
+                    break;
+                case 13:
+                    submitOtp();
+                    break;
+                default:
+                    break;
+            }
+        });
 
         function initiate() {
             $('#digit-1').select();
@@ -306,7 +322,7 @@
 
         window.addEventListener("load", initiate, false);
         window.addEventListener("message", function (event) {
-            console.log(event.data, "Event data");
+            // console.log(event.data, "Event data");
             if (event.data === 'otp_validated') {
                 otpAccepted();
             }
