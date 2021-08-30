@@ -230,13 +230,16 @@
 
         function moveBubble() {
             const width = window.innerWidth;
-            const inputWidth = width - 0.1 * width;
+            const inputWidth = width - 0.1 * width; //Width is set to 90% in CSS
             const rangeInput = document.getElementById("range_picker");
             const { value, min, max } = rangeInput;
             const valuePercent = 100 * (value - min) / (max - min);
             const bubbleWidth = document.querySelector('.slider_value_span').offsetWidth;
             let left = ((width * 0.1) / 2) - (bubbleWidth - 30) + valuePercent / 100 * inputWidth;
             left = left + bubbleWidth + 10 > width ? width - bubbleWidth - 10 : left;
+
+            const minLeft = 0.05 * width; //Input width is set to 90%. So min left will be 10/2% on each side
+            left = left < minLeft ? minLeft : left;
             document.querySelector('.slider_value_span').style.left = `${left}px`;
             var a = '#4a90e2';
             rangeInput.style.background = "linear-gradient(to right, ".concat(a, " 0%, ").concat(a, " ").concat((value - min) / (max - min) * 100, "%, #DEE2E6 ").concat((value - min) / (max - min) * 100, "%, #DEE2E6 100%)");
