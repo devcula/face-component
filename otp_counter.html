@@ -182,12 +182,10 @@
 
                     if (next.length) {
                         $(next).select();
-                    } else {
-                        // if (parent.data('autosubmit')) {
-                        //     parent.submit();
-                        // }
-                        $('#otp_submit').focus();
                     }
+                    // else {
+                    //     $('#otp_submit').focus();
+                    // }
                 }
                 else {
                     var prev = parent.find('input#' + $(this).data('previous'));
@@ -281,26 +279,31 @@
             }), '*');
         }
 
-        $('#otp_submit').on('click keyup', function (e) {
-            // console.log(e, "CLICK EVENT");
-            if (e.type == "click") {
-                submitOtp();
-                return;
-            }
-
-            switch (e.keyCode) {
-                case 8:
-                case 37:
-                case 38:
-                    $('#digit-6').select();
-                    break;
-                case 13:
-                    submitOtp();
-                    break;
-                default:
-                    break;
-            }
+        $('#otp_submit').on('click', function (e) {
+            console.log(e, "CLICK EVENT");
+            submitOtp();
         });
+
+        // $('#otp_submit').on('keyup', function (e) {
+        //     console.log(e, "KEYUP EVENT");
+        //     // if (e.type == "click" || e.keyCode == 13) {
+        //     //     submitOtp();
+        //     //     return;
+        //     // }
+
+        //     switch (e.keyCode) {
+        //         case 8:
+        //         case 37:
+        //         case 38:
+        //             $('#digit-6').select();
+        //             break;
+        //         // case 13:
+        //         //     submitOtp();
+        //         //     break;
+        //         default:
+        //             break;
+        //     }
+        // });
 
         function initiate() {
             $('#digit-1').select();
