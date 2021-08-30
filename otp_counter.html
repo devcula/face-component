@@ -163,39 +163,6 @@
         $('.digit-group').find('input').each(function () {
             $(this).attr('maxlength', 1);
 
-            // $(this).on('keyup', function (e) {
-            //     if ($('#digit-1').val() && $('#digit-2').val()
-            //         && $('#digit-3').val() && $('#digit-4').val()
-            //         && $('#digit-5').val() && $('#digit-6').val()) {
-            //         $('#otp_submit').attr('disabled', false);
-            //     }
-            //     else {
-            //         $('#otp_submit').attr('disabled', true);
-            //     }
-            //     console.log(e, "keyup event");
-
-            //     var parent = $($(this).parent());
-
-            //     if (e.keyCode === 8 || e.keyCode === 37) {
-            //         var prev = parent.find('input#' + $(this).data('previous'));
-
-            //         if (prev.length) {
-            //             $(prev).select();
-            //         }
-            //     }
-            //     else if ((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 96 && e.keyCode <= 105) || e.keyCode === 39) {
-            //         var next = parent.find('input#' + $(this).data('next'));
-
-            //         if (next.length) {
-            //             $(next).select();
-            //         } else {
-            //             if (parent.data('autosubmit')) {
-            //                 parent.submit();
-            //             }
-            //         }
-            //     }
-            // });
-
             $(this).on('input', function (e) {
                 if ($('#digit-1').val() && $('#digit-2').val()
                     && $('#digit-3').val() && $('#digit-4').val()
@@ -216,9 +183,10 @@
                     if (next.length) {
                         $(next).select();
                     } else {
-                        if (parent.data('autosubmit')) {
-                            parent.submit();
-                        }
+                        // if (parent.data('autosubmit')) {
+                        //     parent.submit();
+                        // }
+                        $('#otp_submit').select();
                     }
                 }
                 else {
