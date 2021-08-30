@@ -202,14 +202,28 @@
         }
         setQueryParams();
 
+        function getAmount(amount) {
+            if (!amount) {
+                return "";
+            }
+            amount = amount.toString();
+            let lastThree = amount.substring(amount.length - 3);
+            let otherNumbers = amount.substring(0, amount.length - 3);
+            if (otherNumbers != '') {
+                lastThree = ',' + lastThree;
+            }
+            let res = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
+            return res;
+        }
+
         params.data = decodeURIComponent(params.data);
         params.data = JSON.parse(params.data);
         const rangeInput = document.getElementById("range_picker");
         rangeInput.min = params.data.min;
         rangeInput.max = params.data.max;
         rangeInput.step = params.data.step;
-        document.querySelector('.lableBefore').innerHTML = `Min<br>${params.data.min}`;
-        document.querySelector('.lableAfter').innerHTML = `Max<br>${params.data.max}`;
+        document.querySelector('.lableBefore').innerHTML = params.data.convert ? `Min<br> ${getAmount(params.data.min)}` : `Min<br>${params.data.min}`;
+        document.querySelector('.lableAfter').innerHTML = params.data.convert ? `Max<br>${getAmount(params.data.max)}` : `Max<br>${params.data.max}`;
         document.querySelector('.slider_output').innerHTML = params.data.value;
         document.querySelector('.slider_title').innerHTML = params.data.title;
         rangeInput.value = params.data.value;
