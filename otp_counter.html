@@ -249,6 +249,7 @@
             seconds = params.seconds;
             setTimers(seconds);
             intervalId = setInterval(decreaseTimer, 1000);
+            $('#digit-1,#digit-2,#digit-3,#digit-4,#digit-5,#digit-6').val("");
             if ($('#digit-1').val() && $('#digit-2').val()
                 && $('#digit-3').val() && $('#digit-4').val()
                 && $('#digit-5').val() && $('#digit-6').val()
@@ -280,8 +281,13 @@
             }), '*');
         }
 
-        $('#otp_submit').on('keyup', function (e) {
+        $('#otp_submit').on('click keyup', function (e) {
             // console.log(e, "CLICK EVENT");
+            if (e.type == "click") {
+                submitOtp();
+                return;
+            }
+
             switch (e.keyCode) {
                 case 8:
                 case 37:
