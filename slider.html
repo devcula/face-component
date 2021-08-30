@@ -222,8 +222,8 @@
         rangeInput.min = params.data.min;
         rangeInput.max = params.data.max;
         rangeInput.step = params.data.step;
-        document.querySelector('.lableBefore').innerHTML = params.data.convert ? `Min<br> ${getAmount(params.data.min)}` : `Min<br>${params.data.min}`;
-        document.querySelector('.lableAfter').innerHTML = params.data.convert ? `Max<br>${getAmount(params.data.max)}` : `Max<br>${params.data.max}`;
+        document.querySelector('.lableBefore').innerHTML = params.data.convert ? `Min<br>${params.data.currency ? params.data.currency + " " : ""}${getAmount(params.data.min)}` : `Min<br>${params.data.min}`;
+        document.querySelector('.lableAfter').innerHTML = params.data.convert ? `Max<br>${params.data.currency ? params.data.currency + " " : ""}${getAmount(params.data.max)}` : `Max<br>${params.data.max}`;
         document.querySelector('.slider_output').innerHTML = params.data.value;
         document.querySelector('.slider_title').innerHTML = params.data.title;
         rangeInput.value = params.data.value;
